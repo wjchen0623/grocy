@@ -30,13 +30,9 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
         gd \
         zip \
         intl \
-        ctype \
         mbstring \
         fileinfo \
-        curl \
-        iconv \
-        tokenizer \
-        filter
+        curl
 
 # Enable Apache modules
 RUN a2enmod rewrite
