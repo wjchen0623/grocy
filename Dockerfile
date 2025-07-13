@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y \
     libicu-dev \
     libsqlite3-dev \
     libcurl4-openssl-dev \
+    libonig-dev \
     unzip \
     curl \
     && rm -rf /var/lib/apt/lists/*
