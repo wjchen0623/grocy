@@ -4,8 +4,8 @@
 		"builder": "dockerfile"
 	},
 	"deploy": {
-		"healthcheckPath": "/api/system/db-changed-time",
-		"healthcheckTimeout": 100,
+		"healthcheckPath": "/",
+		"healthcheckTimeout": 300,
 		"restartPolicyType": "always"
 	},
 	"volumes": [
