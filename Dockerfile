@@ -66,6 +66,12 @@ RUN cp /var/www/html/config-dist.php /var/www/html/data/config.php && \
 
 # Create startup script
 RUN echo '#!/bin/bash\n\
+# Use Railway'"'"'s PORT environment variable if available\n\
+if [ -n "$PORT" ]; then\n\
+    sed -i "s/Listen 80/Listen $PORT/" /etc/apache2/ports.conf\n\
+    sed -i "s/:80/:$PORT/" /etc/apache2/sites-available/*.conf\n\
+fi\n\
+\n\
 # Ensure data directory is writable\n\
 chown -R www-data:www-data /var/www/html/data\n\
 chmod -R 755 /var/www/html/data\n\
@@ -80,11 +86,8 @@ fi\n\
 apache2-foreground' > /usr/local/bin/start-grocy.sh && \
     chmod +x /usr/local/bin/start-grocy.sh
 
-# Expose port
+# Expose port (Railway will override this)
 EXPOSE 80
-
-# Use Railway's PORT environment variable if available
-ENV PORT=80
 
 # Start the application
 CMD ["/usr/local/bin/start-grocy.sh"] 
