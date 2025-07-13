@@ -8,8 +8,19 @@ RUN apt-get update && apt-get install -y \
     libfreetype6-dev \
     libjpeg62-turbo-dev \
     libicu-dev \
+    libsqlite3-dev \
+    libcurl4-openssl-dev \
     unzip \
+    curl \
     && rm -rf /var/lib/apt/lists/*
+
+# Install Node.js and Yarn
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
+    && apt-get install -y nodejs \
+    && npm install -g yarn
+
+# Install Composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Install PHP extensions
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
@@ -20,7 +31,11 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
         intl \
         ctype \
         mbstring \
-        fileinfo
+        fileinfo \
+        curl \
+        iconv \
+        tokenizer \
+        filter
 
 # Enable Apache modules
 RUN a2enmod rewrite
@@ -35,6 +50,12 @@ RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
 # Copy application files
 COPY . /var/www/html/
+
+# Install PHP dependencies
+RUN cd /var/www/html && composer install --no-dev --optimize-autoloader
+
+# Install JavaScript dependencies and build
+RUN cd /var/www/html && yarn install --modules-folder public/packages --production=true --ignore-scripts --ignore-optional
 
 # Create data directory and set permissions
 RUN mkdir -p /var/www/html/data && \
