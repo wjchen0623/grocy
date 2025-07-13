@@ -1,0 +1,45 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Documentation
+README.md
+RAILWAY_DEPLOYMENT.md
+docs/
+
+# Development files
+.vscode/
+.idea/
+*.log
+*.tmp
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+node_modules/
+.npm/
+.yarn/
+
+# Railway
+.railway/
+
+# Backup files
+*.bak
+*.backup
+
+# Test files
+tests/
+test/
+
+# PHP composer cache
+vendor/composer/
+.composer/
+
+# Temporary files
+/tmp/
+/temp/ 

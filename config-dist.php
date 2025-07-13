@@ -35,13 +35,13 @@ Setting('CALENDAR_SHOW_WEEK_OF_YEAR', true);
 // leave empty to use CALENDAR_FIRST_DAY_OF_WEEK (see above)
 // Needs to be a number where Sunday = 0, Monday = 1 and so forth
 // Can also be set to -1 to dynamically start the meal plan week on "today"
-Setting('MEAL_PLAN_FIRST_DAY_OF_WEEK', '');
+Setting('MEAL_PLAN_FIRST_DAY_OF_WEEK', -1);
 
 // To keep it simple: Grocy does not handle any currency conversions,
 // this here is used to format all money values,
 // so doesn't really matter, but needs to be the
 // ISO 4217 code of the currency ("USD", "EUR", "GBP", etc.)
-Setting('CURRENCY', 'USD');
+Setting('CURRENCY', 'SGD');
 
 // Your preferred unit for energy
 // E.g. "kcal" or "kJ" or something else (doesn't really matter, it's only used to display energy values)
