@@ -67,9 +67,13 @@ RUN cp /var/www/html/config-dist.php /var/www/html/data/config.php && \
 # Create startup script
 RUN echo '#!/bin/bash\n\
 # Use Railway'"'"'s PORT environment variable if available\n\
-if [ -n "$PORT" ]; then\n\
-    sed -i "s/Listen 80/Listen $PORT/" /etc/apache2/ports.conf\n\
-    sed -i "s/:80/:$PORT/" /etc/apache2/sites-available/*.conf\n\
+if [ -n "$PORT" ] && [ "$PORT" != "80" ]; then\n\
+    echo "Configuring Apache for port $PORT"\n\
+    sed -i "s/^Listen 80$/Listen $PORT/" /etc/apache2/ports.conf\n\
+    sed -i "s/<VirtualHost \\*:80>/<VirtualHost *:$PORT>/" /etc/apache2/sites-available/*.conf\n\
+    echo "Apache configured for port $PORT"\n\
+else\n\
+    echo "Using default port 80"\n\
 fi\n\
 \n\
 # Ensure data directory is writable\n\
